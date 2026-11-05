@@ -2,11 +2,13 @@ name: Generate Snake
 
 on:
   schedule:
-    # Chạy tự động mỗi 6 giờ một lần
+    # Chạy tự động mỗi 6 giờ
     - cron: "0 */6 * * *"
+
+  # Chạy thủ công
   workflow_dispatch:
-  
-  # Tự động chạy khi có commit mới trên nhánh main
+
+  # Chạy khi có commit mới trên nhánh main
   push:
     branches:
       - main
@@ -14,9 +16,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Generate Snake SVG
         uses: Platane/snk@v3
@@ -26,9 +29,9 @@ jobs:
           outputs: |
             dist/github-contribution-grid-snake.svg
             dist/github-contribution-grid-snake-dark.svg?palette=github-dark
-          
+
       - name: Push snake to output branch
-        uses: crazy-max/ghaction-github-pages@v3
+        uses: crazy-max/ghaction-github-pages@v4
         with:
           target_branch: output
           build_dir: dist
